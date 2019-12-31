@@ -1,0 +1,60 @@
+@page "/form-example"
+@using ServerBlazor.Data
+@using System.Text.Json
+@inject IJSRuntime jsRuntime
+
+<h1>Form Validation</h1>
+
+<EditForm Model="@jobApplication" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <p>
+        <label for="fullname">Full Name:</label>
+        <InputText id="fullname" @bind-Value="jobApplication.FullName" 
+                   @oninput="@(EventCallback.Factory.CreateBinder<string>(
+                    receiver: this, 
+                    setter: newValue => Task.FromResult(TypeCheck(newValue)),
+                    existingValue: string.Empty
+                   ))"/>
+        <ValidationMessage For="@(() => jobApplication.FullName)" />
+    </p>
+    <p>
+        <label for="description">Description:</label>
+        <InputTextArea id="description" @bind-Value="jobApplication.Description" />
+    </p>
+    <p>
+        <label for="salary">Expected Salary:</label>
+        <InputNumber id="salary" @bind-Value="jobApplication.Salary" />
+        <ValidationMessage For="@(() => jobApplication.Salary)" />
+    </p>
+    <p>
+        <label for="opensource">Joint Open Source:</label>
+        <InputCheckbox id="opensource" @bind-Value="jobApplication.DoesOpenSource" />
+    </p>
+    <p>
+        <label for="available">Available Date:</label>
+        <InputDate id="available" @bind-Value="jobApplication.Available" />
+    </p>
+    <button type="submit">Submit!</button>
+</EditForm>
+
+<div>
+    submit result: <span id="resultJson"></span>
+</div>
+
+@code
+{
+    private JobApplication jobApplication = new JobApplication();
+
+    private async Task TypeCheck(string currentValue)
+    {
+        await jsRuntime.InvokeVoidAsync("setElementById", "resultJson",
+            $"current value: {currentValue}");
+    }
+
+    private async Task Submit()
+    {
+        await jsRuntime.InvokeVoidAsync("setElementById", "resultJson",
+            JsonSerializer.Serialize(jobApplication));
+    }
+}

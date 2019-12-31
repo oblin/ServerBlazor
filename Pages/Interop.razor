@@ -1,0 +1,58 @@
+@page "/interop"
+@using ServerBlazor.Services
+@inject IJSRuntime jsRuntime
+
+<h1>JS interop</h1>
+
+<h3>Create Alert</h3>
+
+<button class="btn btn-success" @onclick="ShowAlert">Show Alert</button>
+
+<h3>Ask me a question</h3>
+<input type="text" @bind="questionText" />
+
+<button class="btn btn-success" @onclick="AskQuestion">Ask question</button>
+
+<div>The answer is: <span id="spanAnswer"></span></div>
+
+<input @ref="inputFocus" />
+<button class="btn btn-danger" @onclick="Focus">Focus!</button>
+
+<h3>Give me Random int</h3>
+<div>
+    The Random number is: <span id="spanRandom"></span>
+</div>
+<button class="btn btn-info" onclick="randomInt(1000)">Random number 1</button>
+<button class="btn btn-info" @onclick="GenerateRandomInt">Random number 2</button>
+
+@code 
+{
+    ElementReference inputFocus;
+    async Task Focus() {
+        await jsRuntime.InvokeVoidAsync("focusOnElement", inputFocus);
+    }
+
+    string questionText = string.Empty;
+    async Task AskQuestion() 
+    {
+        var response = await jsRuntime.InvokeAsync<string>("createPrompt", questionText);
+        await jsRuntime.InvokeVoidAsync("setElementById", "spanAnswer", response);
+    }
+
+    async Task ShowAlert()
+    {
+        await jsRuntime.InvokeVoidAsync(identifier: "createAlert");
+    }
+
+    async Task GenerateRandomInt() 
+    {
+        await jsRuntime.InvokeVoidAsync("randomIntByObject", 100, 
+            DotNetObjectReference.Create(new RandomInt()));
+    }
+
+    [JSInvokable]
+    public static Task<int> GenerateRandomInt(int maxValue)
+    {
+        return Task.FromResult(new Random().Next(maxValue));
+    }
+}

@@ -1,0 +1,18 @@
+﻿@using Microsoft.AspNetCore.Components
+@inject ServerBlazor.Services.RandomService randomService
+
+<div class="alert alert-success">
+    @AlertType
+</div>
+
+<div class="alert alert-danger">
+    My Random Id is: @randomService.RandomId
+</div>
+
+<ChildComponent1>This is a child</ChildComponent1>
+
+@code
+{
+    [Parameter]
+    public string AlertType {get;set;}
+}

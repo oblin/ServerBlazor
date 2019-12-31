@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+@inject UserManager<IdentityUser> userManager
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+    <ul class="navbar-nav">
+        @if (signInManager.IsSignedIn(User))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="identity" asp-page="/Account/Manager/Index">Hello @User.Identity.Name</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-danger" asp-area="identity" asp-page="/Account/Logout">Log out</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-danger" asp-area="identity" asp-page="/Account/Register">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-danger" asp-area="identity" asp-page="/Account/Login">Login</a>
+            </li>
+        }
+    </ul>

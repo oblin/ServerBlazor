@@ -1,0 +1,13 @@
+@inherits ChildComponentBase
+
+<div class="alert alert-info">
+    @ChildContent
+</div>
+
+<div class="alert alert-@AlertTheme">
+    Toggle dark theme <input type="checkbox" @bind="_darkThemeOn" />
+</div>
+
+<div class="alert alert-warning">
+    My Random Id is: @RandomService.RandomId
+</div>

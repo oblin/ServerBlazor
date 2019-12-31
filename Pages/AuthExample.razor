@@ -1,0 +1,25 @@
+﻿@page "/authtest"
+@attribute [Authorize]
+
+<h1>Authorization Example</h1>
+
+<AuthorizeView>
+    <Authorized>
+        <h2>You can only see this if you login.</h2>
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Policy="IsAdmin">
+    <Authorized>
+        <h2>You can only see this if your email end with @@admin.</h2>
+    </Authorized>
+    <NotAuthorized>
+        <h2>Only Admin can see this!</h2>
+    </NotAuthorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="SecretRole">
+    <Authorized>
+        <h2>You can only see this if your role is secret role.</h2>
+    </Authorized>
+</AuthorizeView>
