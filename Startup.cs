@@ -1,22 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ServerBlazor.Data;
 using ServerBlazor.Services;
+using Blazor.Fluxor;
+using Blazor.Fluxor.ReduxDevTools;
+using Blazor.Fluxor.Routing;
 
 namespace ServerBlazor
 {
@@ -51,6 +47,12 @@ namespace ServerBlazor
             services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<RandomService>();
+
+            services.AddFluxor(options => {
+                options.UseDependencyInjection(typeof(Startup).Assembly);
+                options.AddMiddleware<ReduxDevToolsMiddleware>();
+                options.AddMiddleware<RoutingMiddleware>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

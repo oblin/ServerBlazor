@@ -1,28 +1,23 @@
 ﻿@page "/counter"
-@page "/counter/{startingCount:int}"
+@using Blazor.Fluxor
+@using ServerBlazor.Store.Counter
 @inject NavigationManager navigationManager
+@inherits Blazor.Fluxor.Components.FluxorComponent
+@inject IDispatcher Dispatcher
+@inject IState<CounterState> CounterState
 
 <h1>Counter</h1>
 
-<p>Current count: @currentCount</p>
+<p>Current count: @CounterState.Value.CurrentCount</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 <button class="btn btn-warning" @onclick="MoveToHome">Let's go home</button>
 
 @code {
-    [Parameter]
-    public int StartingCount { get; set; }
-
-    int currentCount = 0;
-
-    protected override void OnInitialized()
-    {
-        currentCount = StartingCount;
-    }
 
     void IncrementCount()
     {
-        currentCount++;
+        Dispatcher.Dispatch(new IncrementCounterAction());
     }
 
     void MoveToHome()
