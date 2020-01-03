@@ -1,0 +1,5 @@
+{
+    "appService.preDeployTask": "publish-release",
+    "appService.deploySubpath": "",
+    "appService.defaultWebAppToDeploy": "/subscriptions/d1ec86be-2303-4cb0-9c01-a67d36f8981d/resourceGroups/BlazorTesting/providers/Microsoft.Web/sites/ServerBlazor"
+}

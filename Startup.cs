@@ -44,6 +44,8 @@ namespace ServerBlazor
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddSignalR().AddAzureSignalR();
+
             services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<RandomService>();
