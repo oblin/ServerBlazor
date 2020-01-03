@@ -13,6 +13,8 @@ using ServerBlazor.Services;
 using Blazor.Fluxor;
 using Blazor.Fluxor.ReduxDevTools;
 using Blazor.Fluxor.Routing;
+using System.Threading.Tasks;
+using ElectronNET.API;
 
 namespace ServerBlazor
 {
@@ -83,6 +85,8 @@ namespace ServerBlazor
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+
+            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync().ConfigureAwait(true));
         }
     }
 }
