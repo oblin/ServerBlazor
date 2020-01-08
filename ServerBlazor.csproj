@@ -15,12 +15,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Blazor.Fluxor" Version="1.1.0"/>
-    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.2.3"/>
+    <PackageReference Include="Blazor.Fluxor" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.2.3" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="electron.manifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 </Project>

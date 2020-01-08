@@ -88,7 +88,7 @@ namespace ServerBlazor
                 endpoints.MapFallbackToPage("/_Host");
             });
 
-            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync().ConfigureAwait(true));
+            //Task.Run(async () => await Electron.WindowManager.CreateWindowAsync().ConfigureAwait(true));
         }
     }
 }
